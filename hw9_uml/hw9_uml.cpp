@@ -30,6 +30,10 @@ public:
 	Human(): Hero("human") {
 	}
 
+	Human(string n): Hero(n) {
+		name = n;
+	}
+
 	int getAttack() override {
 		return 20;
 	}
@@ -49,89 +53,106 @@ public:
 	
 };
 // Decorator (HeroDecorator) хранит ссылку на объект Component и определяет интерфейс, соответствующий интерфейсу Component
-class HeroDecorator abstract : public Hero
+class HumanDecorator abstract : public Human
 {
 protected:
-	Hero* hero;
+	Human* human;
 public:
-	HeroDecorator(string n, Hero* hero) : Hero(n)
+	HumanDecorator(string n, Hero* hero) : Human(n)
 	{
-		this->hero = hero;
+		this->human = human;
+	}
+};
+
+
+// Decorator (HeroDecorator) хранит ссылку на объект Component и определяет интерфейс, соответствующий интерфейсу Component
+class ElfDecorator abstract : public Elf
+{
+protected:
+	Elf* elf;
+public:
+	ElfDecorator(string n, Hero* hero) : Elf(n)
+	{
+		this->elf = elf;
 	}
 };
 // ConcreteDecorator (HumanWarrior) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class HumanWarrior: public HeroDecorator {
+class HumanWarrior: public HumanDecorator {
 public:
-	HumanWarrior(Hero* hero) : HeroDecorator(hero->getName() + " warrior", hero) {}
+	HumanWarrior(Hero* hero) : HumanDecorator(hero->getName() + " warrior", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 20;
+		return human->getAttack() + 20;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() + 10;
+		return human->getSpeed() + 10;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 50;
+		return human->getHealth() + 50;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 20;
+		return human->getProtection() + 20;
 	}
 };
 // ConcreteDecorator (Swordtail) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class Swordtail : public HeroDecorator {
+class Swordtail : public HumanDecorator {
 public:
-	Swordtail(Hero* hero) : HeroDecorator(hero->getName() + " swordtail", hero) {}
+	Swordtail(Hero* hero) : HumanDecorator(hero->getName() + " swordtail", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 40;
+		return human->getAttack() + 40;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() - 10;
+		return human->getSpeed() - 10;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 50;
+		return human->getHealth() + 50;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 40;
+		return human->getProtection() + 40;
 	}
 };
 // ConcreteDecorator (Archer) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class Archer : public HeroDecorator {
+class Archer : public HumanDecorator {
 public:
-	Archer(Hero* hero) : HeroDecorator(hero->getName() + " archer", hero) {}
+	Archer(Hero* hero) : HumanDecorator(hero->getName() + " archer", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 20;
+		return human->getAttack() + 20;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() + 20;
+		return human->getSpeed() + 20;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 50;
+		return human->getHealth() + 50;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 10;
+		return human->getProtection() + 10;
 	}
 };
 
 // ConcreteDecorator (Rider) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class Rider : public HeroDecorator {
+class Rider : public HumanDecorator {
 public:
-	Rider(Hero* hero) : HeroDecorator(hero->getName() + " rider", hero) {}
+	Rider(Hero* hero) : HumanDecorator(hero->getName() + " rider", hero) {}
 	int getAttack() override {
-		return hero->getAttack() - 10;
+		return human->getAttack() - 10;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() + 40;
+		return human->getSpeed() + 40;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 200;
+		return human->getHealth() + 200;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 100;
+		return human->getProtection() + 100;
 	}
 };
 // ConcreteComponent (Elf) - конкретный компонент определяет объект, на который возлагаются дополнительные обязанности
 class Elf : public Hero {
 public:
 	Elf() : Hero("elf") {
+	}
+
+	Elf(string n) : Hero(n) {
+		name = n;
 	}
 
 	int getAttack() override {
@@ -151,90 +172,90 @@ public:
 	}
 };
 // ConcreteDecorator (ElfWarrior) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class ElfWarrior : public HeroDecorator {
+class ElfWarrior : public ElfDecorator {
 public:
-	ElfWarrior(Hero* hero) : HeroDecorator(hero->getName() + " warrior", hero) {}
+	ElfWarrior(Hero* hero) : ElfDecorator(hero->getName() + " warrior", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 20;
+		return elf->getAttack() + 20;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() - 10;
+		return elf->getSpeed() - 10;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 100;
+		return elf->getHealth() + 100;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 20;
+		return elf->getProtection() + 20;
 	}
 };
 // ConcreteDecorator (ElfMagician) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class ElfMagician : public HeroDecorator {
+class ElfMagician : public ElfDecorator {
 public:
-	ElfMagician(Hero* hero) : HeroDecorator(hero->getName() + " magician", hero) {}
+	ElfMagician(Hero* hero) : ElfDecorator(hero->getName() + " magician", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 10;
+		return elf->getAttack() + 10;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() + 10;
+		return elf->getSpeed() + 10;
 	}
 	int getHealth() override {
-		return hero->getHealth() - 50;
+		return elf->getHealth() - 50;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 10;
+		return elf->getProtection() + 10;
 	}
 };
 // ConcreteDecorator (ElfCrossbowman) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class ElfCrossbowman : public HeroDecorator {
+class ElfCrossbowman : public ElfDecorator {
 public:
-	ElfCrossbowman(Hero* hero) : HeroDecorator(hero->getName() + " crossbowman", hero) {}
+	ElfCrossbowman(Hero* hero) : ElfDecorator(hero->getName() + " crossbowman", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 20;
+		return elf->getAttack() + 20;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() + 10;
+		return elf->getSpeed() + 10;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 50;
+		return elf->getHealth() + 50;
 	}
 	int getProtection() override {
-		return hero->getProtection() - 10;
+		return elf->getProtection() - 10;
 	}
 };
 
 // ConcreteDecorator (BadMagician) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class BadMagician : public HeroDecorator {
+class BadMagician : public ElfDecorator {
 public:
-	BadMagician(Hero* hero) : HeroDecorator(hero->getName() + " bad magician", hero) {}
+	BadMagician(Hero* hero) : ElfDecorator(hero->getName() + " bad magician", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 70;
+		return elf->getAttack() + 70;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() + 20;
+		return elf->getSpeed() + 20;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 0;
+		return elf->getHealth() + 0;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 0;
+		return elf->getProtection() + 0;
 	}
 };
 
 // ConcreteDecorator (GoodMagician) - конкретный декоратор возлагает дополнительные обязанности на компонент.
-class GoodMagician : public HeroDecorator {
+class GoodMagician : public ElfDecorator {
 public:
-	GoodMagician(Hero* hero) : HeroDecorator(hero->getName() + " good magician", hero) {}
+	GoodMagician(Hero* hero) : ElfDecorator(hero->getName() + " good magician", hero) {}
 	int getAttack() override {
-		return hero->getAttack() + 50;
+		return elf->getAttack() + 50;
 	}
 	int getSpeed() override {
-		return hero->getSpeed() + 30;
+		return elf->getSpeed() + 30;
 	}
 	int getHealth() override {
-		return hero->getHealth() + 100;
+		return elf->getHealth() + 100;
 	}
 	int getProtection() override {
-		return hero->getProtection() + 30;
+		return elf->getProtection() + 30;
 	}
 };
 
